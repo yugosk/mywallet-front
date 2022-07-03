@@ -1,20 +1,61 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 export default function SignUp() {
   const [userData, setUserData] = useState({
-    name: null,
-    email: null,
-    password: null,
-    confirmPassword: null,
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
+  const navigate = useNavigate();
+
+  function submitSignUp(e) {
+    e.preventDefault();
+    const regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
+    if (
+      userData.name !== "" &&
+      regEmail.test(userData.email) &&
+      userData.password !== "" &&
+      userData.password === userData.confirmPassword
+    ) {
+      const signUpCredentials = {
+        name: userData.name,
+        email: userData.email,
+        password: userData.password,
+      };
+      const promise = axios.post(
+        "https://my-wallet-yugosk.herokuapp.com/sign-up",
+        signUpCredentials
+      );
+      promise.then((res) => {
+        alert("Usuário criado com sucesso!");
+        setTimeout(() => navigate("/"), 3000);
+      });
+      promise.catch((err) => {
+        switch (err.response.status) {
+          case 401:
+            alert(
+              "Este e-mail já está em uso. Utilize outro email para realizar o seu cadastro!"
+            );
+            break;
+          default:
+            alert(
+              "Foram encontrados problemas no servidor, tente novamente mais tarde!"
+            );
+        }
+      });
+    } else {
+      alert("Preencha os campos corretamente!");
+    }
+  }
 
   return (
     <SignUpContainer>
       <h1>MyWallet</h1>
-      <SignUpForm>
+      <SignUpForm onSubmit={submitSignUp}>
         <input
           type="text"
           id="name"

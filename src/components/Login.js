@@ -2,12 +2,30 @@ import { useState, useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../contexts.js/UserContext";
 
 export default function Login() {
   const [userData, setUserData] = useState({
-    name: null,
-    password: null,
+    name: "",
+    password: "",
   });
+  const { setToken } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  async function submitLogin(e) {
+    e.preventDefault();
+    const regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
+    if (regEmail.test(userData.email) && password !== "") {
+      const promise = axios.post("https://my-wallet-yugosk.herokuapp.com/login", userData);
+      promise.then((res) => {
+        await setToken(res.data);
+        navigate("/home");
+      });
+      promise.catch((err) => alert(err));
+    } else {
+      alert("Prencha os campos corretamente!");
+    }
+  }
 
   return (
     <LoginContainer>
