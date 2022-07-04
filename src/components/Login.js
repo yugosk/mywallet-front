@@ -15,11 +15,14 @@ export default function Login() {
   async function submitLogin(e) {
     e.preventDefault();
     const regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
-    if (regEmail.test(userData.email) && password !== "") {
-      const promise = axios.post("https://my-wallet-yugosk.herokuapp.com/login", userData);
+    if (regEmail.test(userData.email) && userData.password !== "") {
+      const promise = axios.post(
+        "https://my-wallet-yugosk.herokuapp.com/login",
+        userData
+      );
       promise.then((res) => {
-        await setToken(res.data);
-        navigate("/home");
+        setToken(res.data);
+        setTimeout(() => navigate("/home"), 3000);
       });
       promise.catch((err) => alert(err));
     } else {
@@ -30,7 +33,7 @@ export default function Login() {
   return (
     <LoginContainer>
       <h1>MyWallet</h1>
-      <LoginForm>
+      <LoginForm onSubmit={submitLogin}>
         <input
           type="text"
           id="email"
