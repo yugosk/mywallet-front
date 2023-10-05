@@ -1,21 +1,5 @@
 import styled from "styled-components";
 
-export default function Login() {
-  return (
-    <Container>
-      <h1>MyWallet</h1>
-      <Form>
-        <input type="text" id="email" placeholder="E-mail" required />
-
-        <input type="password" id="password" placeholder="Senha" required />
-
-        <button>Entrar</button>
-      </Form>
-      <p>Primeira vez? Cadastre-se!</p>
-    </Container>
-  );
-}
-
 const Container = styled.div`
   background-color: #8c11be;
   width: 100vw;
@@ -25,7 +9,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   text-align: center;
-  padding-top: 159px;
+  padding-top: 95px;
 
   h1 {
     font-family: "Saira Stencil One", cursive;
@@ -79,3 +63,5 @@ const Form = styled.form`
     font-family: "Raleway", sans-serif;
   }
 `;
+
+export { Container, Form };
