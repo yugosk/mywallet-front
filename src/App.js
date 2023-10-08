@@ -5,6 +5,7 @@ import Register from "./components/Register/Register";
 import "./App.css";
 import { useState } from "react";
 import UserContext from "./contexts/UserContext";
+import Home from "./components/Home/Home";
 
 function App() {
   const [userInfo, setUserInfo] = useState({});
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
         <ResetCSS />
       </BrowserRouter>
