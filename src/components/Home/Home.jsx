@@ -1,11 +1,30 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../../contexts/UserContext";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import axios from "axios";
+import dayjs from "dayjs";
 
 export default function Home() {
   const { userInfo } = useContext(UserContext);
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    const getTransactions = async () => {
+      const promise = axios.get("http://localhost:4000/transactions", {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      promise
+        .then((res) => {
+          setTransactions(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    getTransactions();
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -13,9 +32,7 @@ export default function Home() {
         <RiLoginBoxLine color="#ffffff" size={"24px"} cursor={"pointer"} />
       </Header>
 
-      <Main empty={false}>
-        <StyledBalance></StyledBalance>
-      </Main>
+      <RecordsList list={transactions} />
       <Buttons>
         <button>
           <AiOutlinePlusCircle color="#ffffff" size={"25px"} />
@@ -28,6 +45,62 @@ export default function Home() {
       </Buttons>
     </Container>
   );
+}
+
+function RecordsList({ list }) {
+  function formatDate(timestamp) {
+    const date = dayjs(timestamp);
+    const formattedDate = date.format("DD/MM");
+    return formattedDate;
+  }
+
+  function mapRecords(list) {
+    const records = list.map((item) => (
+      <RecordLine key={item.id}>
+        <StyledDate>{formatDate(item.date)}</StyledDate>
+        <StyledLabel>{item.description}</StyledLabel>
+        <StyledValue type={item.type}>{item.amount}</StyledValue>
+      </RecordLine>
+    ));
+    return records;
+  }
+
+  if (list.length === 0) {
+    return (
+      <Main empty={true}>
+        <p>
+          Não há registros de <br /> entrada ou saída
+        </p>
+      </Main>
+    );
+  } else {
+    const { color, sum } = calculateBalance(list);
+    return (
+      <Main empty={false}>
+        {mapRecords(list)}
+        <StyledBalance>
+          <p>SALDO</p> <em style={{ color: color }}>{sum}</em>
+        </StyledBalance>
+      </Main>
+    );
+  }
+}
+
+function calculateBalance(array) {
+  let sum = 0;
+  for (let item of array) {
+    const value = parseFloat(item.amount);
+    if (item.type === "in") {
+      sum += value;
+    } else {
+      sum -= value;
+    }
+  }
+  let color = "";
+  if (sum > 0) color = "#03ac00";
+  else if (sum < 0) color = "#c70000";
+  else color = "#000000";
+  return { color, sum };
 }
 
 const Container = styled.div`
@@ -110,7 +183,6 @@ const RecordLine = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 5px;
 `;
 
 const StyledDate = styled.div`
@@ -137,6 +209,7 @@ const StyledLabel = styled.div`
   font-size: 16px;
   font-weight: 400;
   color: #000000;
+  margin-left: 10px;
 `;
 
 const StyledValue = styled.div`
@@ -149,7 +222,7 @@ const StyledValue = styled.div`
   font-family: "Raleway", sans-serif;
   font-size: 16px;
   font-weight: 400;
-  color: ${(props) => (props.inflow ? "#03ac00" : "#c70000")};
+  color: ${(props) => (props.type === "in" ? "#03ac00" : "#c70000")};
 `;
 
 const StyledBalance = styled.div`
@@ -173,7 +246,6 @@ const StyledBalance = styled.div`
     font-family: "Raleway", sans-serif;
     font-size: 17px;
     font-weight: 400;
-    color: ${(props) => (props.positive ? "03ac00" : "c70000")};
     text-align: right;
   }
 `;
