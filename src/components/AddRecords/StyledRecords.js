@@ -8,31 +8,39 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  text-align: center;
-  padding-top: 159px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 87%;
+  height: 78px;
+  align-items: center;
+  justify-content: space-between;
 
   h1 {
-    font-family: "Saira Stencil One", cursive;
-    font-size: 32px;
-    color: #ffffff;
-  }
-
-  p {
     font-family: "Raleway", sans-serif;
-    font-size: 15px;
+    font-size: 26px;
     color: #ffffff;
     font-weight: 700;
-    margin-top: 36px;
   }
 `;
 
 const Form = styled.form`
-  padding-top: 24px;
   width: 87%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   gap: 13px;
+
+  p {
+    font-family: "Raleway", sans-serif;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 400;
+    left: 0;
+    position: relative;
+  }
 
   input {
     width: 100%;
@@ -50,19 +58,19 @@ const Form = styled.form`
     color: #000000;
     opacity: 1;
   }
-
-  button {
-    width: 100%;
-    background-color: #a328d6;
-    height: 46px;
-    border: none;
-    border-radius: 5px;
-    font-size: 20px;
-    color: #ffffff;
-    font-weight: 700;
-    font-family: "Raleway", sans-serif;
-    cursor: pointer;
-  }
 `;
 
-export { Container, Form };
+const Button = styled.button`
+  width: 100%;
+  background-color: #a328d6;
+  height: 46px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 700;
+  font-family: "Raleway", sans-serif;
+  cursor: pointer;
+`;
+
+export { Container, Header, Form, Button };

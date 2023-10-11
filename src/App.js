@@ -6,6 +6,8 @@ import "./App.css";
 import { useState } from "react";
 import UserContext from "./contexts/UserContext";
 import Home from "./components/Home/Home";
+import InRecords from "./components/AddRecords/InRecords";
+import OutRecords from "./components/AddRecords/OutRecords";
 
 function App() {
   const [userInfo, setUserInfo] = useState({});
@@ -17,6 +19,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/addin" element={<InRecords />} />
+          <Route path="/addout" element={<OutRecords />} />
         </Routes>
         <ResetCSS />
       </BrowserRouter>
