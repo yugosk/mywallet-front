@@ -29,13 +29,14 @@ const Header = styled.div`
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: ${(props) => (props.empty ? "center" : "flex-start")};
+  justify-content: ${(props) =>
+    props.empty === "empty" ? "center" : "flex-start"};
   align-items: center;
   background-color: #ffffff;
   border-radius: 5px;
   height: 67%;
   width: 87%;
-  padding-top: 23px;
+  padding: 10px 0 0 7px;
 
   p {
     text-align: center;
@@ -74,8 +75,18 @@ const Buttons = styled.div`
   }
 `;
 
-const RecordLine = styled.div`
+const RecordsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 93%;
+  height: calc(100% - 30px);
+  gap: 5px;
+  overflow: auto;
+  padding-bottom: 20px;
+`;
+
+const RecordLine = styled.div`
+  width: 98%;
   height: 19px;
   display: flex;
   flex-direction: row;
@@ -123,13 +134,13 @@ const StyledValue = styled.div`
 `;
 
 const StyledBalance = styled.div`
-  width: 80%;
-  height: 20px;
+  width: 90%;
+  height: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  bottom: calc(33vh - 68px);
-  position: fixed;
+  align-items: center;
+  background-color: #ffffff;
 
   p {
     font-family: "Raleway", sans-serif;
@@ -157,4 +168,5 @@ export {
   StyledLabel,
   StyledValue,
   StyledBalance,
+  RecordsDiv,
 };

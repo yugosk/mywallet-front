@@ -15,6 +15,7 @@ import {
   StyledLabel,
   StyledValue,
   StyledBalance,
+  RecordsDiv,
 } from "./StyledHome";
 
 export default function Home() {
@@ -89,7 +90,7 @@ function RecordsList({ list }) {
 
   if (list.length === 0) {
     return (
-      <Main empty={true}>
+      <Main empty={""}>
         <p>
           Não há registros de <br /> entrada ou saída
         </p>
@@ -98,8 +99,8 @@ function RecordsList({ list }) {
   } else {
     const { color, sum } = calculateBalance(list);
     return (
-      <Main empty={false}>
-        {mapRecords(list)}
+      <Main empty={"empty"}>
+        <RecordsDiv>{mapRecords(list)}</RecordsDiv>
         <StyledBalance>
           <p>SALDO</p> <em style={{ color: color }}>{sum}</em>
         </StyledBalance>

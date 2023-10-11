@@ -43,7 +43,7 @@ export default function InRecords() {
             "Ocorreu um erro ao inserir a nova entrada, tente novamente mais tarde"
           )
         )
-        .finally(navigate("/home"));
+        .finally(setTimeout(() => navigate("/home"), 1000));
     } else {
       alert("Preencha todos os campos corretamente!");
     }
