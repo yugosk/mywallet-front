@@ -4,6 +4,8 @@ import { BiEdit } from "react-icons/bi";
 import { AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
 import UserContext from "../../contexts/UserContext";
+import EditContext from "../../contexts/EditContext";
+import { useNavigate } from "react-router-dom";
 import {
   Main,
   RecordLine,
@@ -62,7 +64,9 @@ export default function RecordsList({ list }) {
 function Record({ id, date, description, type, amount, newList, setNewList }) {
   const [hovered, setHovered] = useState(false);
   const { userInfo } = useContext(UserContext);
+  const { setEditInfo } = useContext(EditContext);
   const { token } = userInfo;
+  const navigate = useNavigate();
 
   async function deleteRecord(id) {
     const userConfirm = window.confirm(
@@ -83,6 +87,11 @@ function Record({ id, date, description, type, amount, newList, setNewList }) {
     }
   }
 
+  function editRecord(id, type, date, description, amount) {
+    setEditInfo({ id, type, date, description, amount });
+    navigate("/edit");
+  }
+
   if (!hovered) {
     return (
       <RecordLine onMouseEnter={() => setHovered(true)}>
@@ -97,7 +106,11 @@ function Record({ id, date, description, type, amount, newList, setNewList }) {
         <StyledDate>{formatDate(date)}</StyledDate>
         <StyledLabel>{description}</StyledLabel>
         <IconBox>
-          <BiEdit size={"16px"} cursor={"pointer"} />
+          <BiEdit
+            size={"16px"}
+            cursor={"pointer"}
+            onClick={() => editRecord(id, type, date, description, amount)}
+          />
           <AiOutlineDelete
             size={"16px"}
             cursor={"pointer"}
