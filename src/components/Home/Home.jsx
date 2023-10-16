@@ -4,19 +4,8 @@ import UserContext from "../../contexts/UserContext";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import axios from "axios";
-import dayjs from "dayjs";
-import {
-  Container,
-  Header,
-  Main,
-  Buttons,
-  RecordLine,
-  StyledDate,
-  StyledLabel,
-  StyledValue,
-  StyledBalance,
-  RecordsDiv,
-} from "./StyledHome";
+import { Container, Header, Buttons } from "./StyledHome";
+import RecordsList from "./RecordsList";
 
 export default function Home() {
   const { userInfo, setUserInfo } = useContext(UserContext);
@@ -68,61 +57,4 @@ export default function Home() {
       </Buttons>
     </Container>
   );
-}
-
-function RecordsList({ list }) {
-  function formatDate(timestamp) {
-    const date = dayjs(timestamp);
-    const formattedDate = date.format("DD/MM");
-    return formattedDate;
-  }
-
-  function mapRecords(list) {
-    const records = list.map((item) => (
-      <RecordLine key={item.id}>
-        <StyledDate>{formatDate(item.date)}</StyledDate>
-        <StyledLabel>{item.description}</StyledLabel>
-        <StyledValue type={item.type}>{item.amount}</StyledValue>
-      </RecordLine>
-    ));
-    return records;
-  }
-
-  if (list.length === 0) {
-    return (
-      <Main empty={""}>
-        <p>
-          Não há registros de <br /> entrada ou saída
-        </p>
-      </Main>
-    );
-  } else {
-    const { color, sum } = calculateBalance(list);
-    return (
-      <Main empty={"empty"}>
-        <RecordsDiv>{mapRecords(list)}</RecordsDiv>
-        <StyledBalance>
-          <p>SALDO</p> <em style={{ color: color }}>{sum}</em>
-        </StyledBalance>
-      </Main>
-    );
-  }
-}
-
-function calculateBalance(array) {
-  let sum = 0;
-  for (let item of array) {
-    const value = parseFloat(item.amount);
-    if (item.type === "in") {
-      sum += value;
-    } else {
-      sum -= value;
-    }
-  }
-  sum = sum.toFixed(2);
-  let color = "";
-  if (sum > 0) color = "#03ac00";
-  else if (sum < 0) color = "#c70000";
-  else color = "#000000";
-  return { color, sum };
 }

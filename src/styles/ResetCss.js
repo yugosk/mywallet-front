@@ -52,6 +52,8 @@ table {
 
 * {
 	box-sizing: border-box;
+	max-width: 375px;
+	max-height: 667px;
 }
 `;
 

@@ -24,6 +24,8 @@ export default function Login() {
           navigate("/home");
         })
         .catch((err) => alert(err));
+    } else {
+      alert("Preencha os campos corretamente");
     }
   }
 

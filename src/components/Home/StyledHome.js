@@ -158,6 +158,15 @@ const StyledBalance = styled.div`
   }
 `;
 
+const IconBox = styled.div`
+  width: 19%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5px;
+`;
+
 export {
   Container,
   Header,
@@ -169,4 +178,5 @@ export {
   StyledValue,
   StyledBalance,
   RecordsDiv,
+  IconBox,
 };

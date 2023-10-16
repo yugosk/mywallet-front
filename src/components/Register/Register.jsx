@@ -14,7 +14,6 @@ export default function Register() {
 
   async function submitRegister(e) {
     e.preventDefault();
-    console.log(JSON.stringify(userData));
     const regEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (
       regEmail.test(userData.email) &&
@@ -25,12 +24,12 @@ export default function Register() {
       const promise = axios.post("http://localhost:4000/register", userData);
       promise
         .then((res) => {
-          alert("New user registered succesfully");
+          alert("Novo usuário criado com sucesso!");
           navigate("/");
         })
         .catch((err) => alert(err.response.data));
     } else {
-      alert("Something went wrong, check your inputs");
+      alert("Preencha os campos corretamente");
     }
   }
   return (
