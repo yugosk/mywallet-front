@@ -14,7 +14,7 @@ My Wallet is a web aplication in which people can insert their income and expend
 - Add and edit expense
 - Add and edit revenue
 
-## Technologies
+## Techs
 
 The following tools and frameworks were used in the development of the project: <br>
 
@@ -25,11 +25,11 @@ The following tools and frameworks were used in the development of the project: 
 1. Clone this repository
 
 ```bash
-git clone COLOCA O LINK
+git clone https://github.com/yugosk/mywallet-front.git
 ```
 
-2. Clone the back-end repository at nao esquece do link vagabundo
-3. Follow instructions to run back-end at nao esquece do link vagabundo
+2. Clone the back-end repository at https://github.com/yugosk/mywallet-back
+3. Follow instructions to run back-end at https://github.com/yugosk/mywallet-back
 4. Install dependencies
 
 ```bash
