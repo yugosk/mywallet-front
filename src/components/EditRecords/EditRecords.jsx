@@ -55,8 +55,8 @@ export default function EditRecords() {
           )
         )
         .finally(() => {
+          navigate("/home");
           setEditInfo({});
-          setTimeout(() => navigate("/home"), 1000);
         });
     } else {
       alert("Preencha os campos corretamente!");
